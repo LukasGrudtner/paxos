@@ -59,7 +59,7 @@ void Service::on_response_sent(const boost::system::error_code& ec, std::size_t 
      * Here we put our treatment!!!
      */
 
-    on_finish();
+    // on_finish();
 }
 
 /* Here we perform the cleanup. */
@@ -83,4 +83,18 @@ void Service::process_request(asio::streambuf& request)
     /**
      * Here we put our process request!!!!!
      */
+
+    std::string m_response = "accepted\n";
+
+    asio::async_write(*m_sock.get(), 
+            asio::buffer(m_response),
+            [this](
+                            const boost::system::error_code& ec,
+                            std::size_t bytes_transferred) 
+                            {
+                                on_response_sent(ec,
+                                  bytes_transferred);
+               });
+
+    std::cout << "teste" << std::endl;
 }

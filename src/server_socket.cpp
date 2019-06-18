@@ -1,12 +1,12 @@
-#include "../include/socket.h"
+#include "../include/server_socket.h"
 
-Socket::Socket()
+ServerSocket::ServerSocket()
 {
     m_work.reset(new asio::io_service::work(m_ios));
 }
 
 /* Start the server. */
-void Socket::start(unsigned short port_num, unsigned int thread_pool_size)
+void ServerSocket::start(unsigned short port_num, unsigned int thread_pool_size)
 {
     assert(thread_pool_size > 0);
 
@@ -28,7 +28,7 @@ void Socket::start(unsigned short port_num, unsigned int thread_pool_size)
 }
 
 /* Stops the server. */
-void Socket::stop()
+void ServerSocket::stop()
 {
     acc->stop();
     m_ios.stop();

@@ -1,5 +1,5 @@
-#ifndef __SOCKET_H__
-#define __SOCKET_H__
+#ifndef __SERVER_SOCKET_H__
+#define __SERVER_SOCKET_H__
 
 #include <boost/asio.hpp>
 
@@ -7,10 +7,10 @@
 
 using namespace boost;
 
-class Socket
+class ServerSocket
 {
 public:
-    Socket();
+    ServerSocket();
 
     /* Starts the server, passing the port number and the number ofthreads to service requests. */
     void start(unsigned short port_num, unsigned int thread_pool_size);
