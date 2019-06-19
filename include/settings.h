@@ -5,31 +5,31 @@
 #include <stdio.h>
 #include <time.h>
 
-#define MAX_TIME 5000
-#define MAX_N 10000
+#define MAX_TIME 5000   /* Tempo máximo em milisegundos de espera no tempo de processamento. */
+#define MAX_N 10000     /* Valor máximo na escolha do n */
 
-#define DEFAULT_PORT 1234
-#define DEFAULT_THREAD_POOL_SIZE 2
+#define DEFAULT_PORT 1234   /* Porta padrão */
+#define DEFAULT_THREAD_POOL_SIZE 2  /* Tamanho padrão do pool de threads */
 
-#define NUMBER_OF_ACCEPTORS 4
-#define NUMBER_OF_PROPOSERS 2
-#define NUMBER_OF_LEARNERS 3
+#define NUMBER_OF_ACCEPTORS 4   /* Número de acceptors no sistema */
+#define NUMBER_OF_PROPOSERS 2   /* Número de proposers no sistema */
+#define NUMBER_OF_LEARNERS 3    /* Número de learners no sistema */
 
-#define SEPARATOR ";"
-#define END_OF_MESSAGE "\n"
+#define SEPARATOR ";"       /* Separador de informações nas mensagens enviadas */
+#define END_OF_MESSAGE "\n" /* Símbolo de fim de mensagem */
 
 /* Messages */
-#define PREPARE_REQUEST     "prepare_request"
-#define PREPARE_RESPONSE    "prepare_response"
-#define ACCEPT_REQUEST      "accept_request"
-#define ACCEPTED            "accepted"
+#define PREPARE_REQUEST     "prepare_request"   /* Mensagem de prepare request */
+#define PREPARE_RESPONSE    "prepare_response"  /* Mensagem de prepare response */
+#define ACCEPT_REQUEST      "accept_request"    /* Mensagem de accept request */
+#define ACCEPTED            "accepted"          /* Mensagem de accepted */
 
 /* Paxos components */
-#define PROPOSER "proposer"
+#define PROPOSER "proposer"     /* Descrição dos componentes */
 #define ACCEPTOR "acceptor"
 #define LEARNER "learner"
 
-/* Component info struct */
+/* Estrutura com a informação de cada um dos nós */
 struct Component {
     std::string component;
     std::string ip_address;

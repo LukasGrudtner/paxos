@@ -1,4 +1,4 @@
-#include "../include/connection.h"
+#include "../../../include/socket/server/connection.h"
 
 Connection::Connection(asio::io_service& ios, unsigned short port_num, PaxosComponent* component) :
     m_ios(ios),

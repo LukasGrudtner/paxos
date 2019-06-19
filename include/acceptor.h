@@ -7,10 +7,10 @@
 #include <boost/thread/thread.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include "paxos_component.h"
-#include "server_socket.h"
-#include "client_socket.h"
 #include "settings.h"
+#include "paxos_component.h"
+#include "socket/server/server_socket.h"
+#include "socket/client/client_socket.h"
 
 class Acceptor : public PaxosComponent
 {
@@ -39,16 +39,27 @@ public:
      */
     void start_listening(unsigned short port);
 
+    /**
+     * Trata as mensagens recebidas.
+     */
     std::string on_received_response(std::string response);
 
+private:
+    /**
+     * Lê o endereço de todos os nodos aos quais o acceptor irá se comunicar 
+     * através de um arquivo de texto.
+     */
+    void read_nodes_address();
 
 private:
-    // static std::string on_response_received(std::string response);
-
-private:
+    /* Valores n e v escolhidos pelo acceptor. */
     unsigned int _chosen_n   = 0;
     int          _chosen_v   = 0;
+
+    /* Lista de informações dos nós learners. */
     std::vector<Component> _learners;
+
+    /* Flag indicando se o acceptor já aceitou um valor. */
     bool _accepted = false;
 };
 

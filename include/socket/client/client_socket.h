@@ -1,14 +1,13 @@
 #ifndef __CLIENT_SOCKET_H__
 #define __CLIENT_SOCKET_H__
 
-#include <boost/asio.hpp>
-
 #include <thread>
 #include <mutex>
 #include <memory>
 #include <iostream>
+#include <boost/asio.hpp>
 
-#include "paxos_component.h"
+#include "../../paxos_component.h"
 
 using namespace boost;
 
@@ -73,10 +72,10 @@ private:
 
 private:
     asio::io_service m_ios;
-   std::map<int, std::shared_ptr<Session>> m_active_sessions;
-   std::mutex m_active_sessions_guard;
-   std::unique_ptr<boost::asio::io_service::work> m_work;
-   std::unique_ptr<std::thread> m_thread;
+    std::map<int, std::shared_ptr<Session>> m_active_sessions;
+    std::mutex m_active_sessions_guard;
+    std::unique_ptr<boost::asio::io_service::work> m_work;
+    std::unique_ptr<std::thread> m_thread;
 
 };
 

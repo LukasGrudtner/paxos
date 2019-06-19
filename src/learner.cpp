@@ -3,20 +3,7 @@
 Learner::Learner(unsigned int id)
 {
     this->_id = id;
-
-    std::ifstream ifs;
-    ifs.open("acceptors.info");
-
-    std::string ip_address;
-    std::string port_num;
-    
-    while (!ifs.eof())
-    {
-        ifs >> ip_address;
-        ifs >> port_num;
-
-        _acceptors.push_back({"", ip_address, stoi(port_num)});
-    } 
+    read_nodes_address();
 }
 
 int Learner::chosen_value()
@@ -67,6 +54,23 @@ std::string Learner::on_received_response(std::string response)
             }
         }
     }
+}
+
+void Learner::read_nodes_address()
+{
+    std::ifstream ifs;
+    ifs.open("acceptors.info");
+
+    std::string ip_address;
+    std::string port_num;
+    
+    while (!ifs.eof())
+    {
+        ifs >> ip_address;
+        ifs >> port_num;
+
+        _acceptors.push_back({"", ip_address, stoi(port_num)});
+    } 
 }
 
 int main()

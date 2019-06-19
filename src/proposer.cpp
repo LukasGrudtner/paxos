@@ -3,20 +3,7 @@
 Proposer::Proposer(unsigned int id)
 {
     this->_id = id;
-
-    std::ifstream ifs;
-    ifs.open("acceptors.info");
-
-    std::string ip_address;
-    std::string port_num;
-    
-    while (!ifs.eof())
-    {
-        ifs >> ip_address;
-        ifs >> port_num;
-
-        _acceptors.push_back({"", ip_address, stoi(port_num)});
-    } 
+    read_nodes_address();
 }
 
 void Proposer::prepare_request(unsigned int n, unsigned int v)
@@ -99,6 +86,23 @@ void Proposer::accept_request()
             std::cout << "Error occured! Error code = " << e.code() << ". Message: " << e.what();
         }
     }
+}
+
+void Proposer::read_nodes_address()
+{
+    std::ifstream ifs;
+    ifs.open("acceptors.info");
+
+    std::string ip_address;
+    std::string port_num;
+    
+    while (!ifs.eof())
+    {
+        ifs >> ip_address;
+        ifs >> port_num;
+
+        _acceptors.push_back({"", ip_address, stoi(port_num)});
+    } 
 }
 
 int main()

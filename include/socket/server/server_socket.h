@@ -1,11 +1,11 @@
 #ifndef __SERVER_SOCKET_H__
 #define __SERVER_SOCKET_H__
 
+#include <string>
 #include <boost/asio.hpp>
 
 #include "connection.h"
-#include "paxos_component.h"
-#include <string>
+#include "../../paxos_component.h"
 
 using namespace boost;
 

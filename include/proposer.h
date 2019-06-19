@@ -3,14 +3,16 @@
 
 #include <string>
 #include <fstream>
+
 #include "settings.h"
-#include "client_socket.h"
 #include "paxos_component.h"
+#include "socket/client/client_socket.h"
 
 class Proposer : public PaxosComponent
 {
 public:
     Proposer(unsigned int id);
+
     /**
      * O número da proposta de cada proceso proponente (proposer) deve ser um
      * número natural único, positivo e monotônico, com relação aos números
@@ -33,7 +35,17 @@ public:
      */
     void accept_request();
 
+    /**
+     * Trata as mensagens recebidas.
+     */
     std::string on_received_response(std::string response);
+
+private:
+    /**
+     * Lê o endereço de todos os nodos aos quais o acceptor irá se comunicar 
+     * através de um arquivo de texto.
+     */
+    void read_nodes_address();
 
 private:
     unsigned int _num_accepted = 0;

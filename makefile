@@ -38,15 +38,15 @@ all: make_folders $(PROJECT_NAME)
 
 acceptor: clean make_folders
 	@ echo "Building target using G++ compiler: acceptor"
-	@ $(CXX) -o acceptor src/acceptor.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
+	@ $(CXX) -o acceptor src/acceptor.cpp src/socket/client/client_socket.cpp src/socket/server/connection.cpp src/paxos_component.cpp src/socket/server/server_socket.cpp src/socket/server/service.cpp $(CXX_FLAGS)
 
 proposer: clean make_folders
 	@ echo "Building target using G++ compiler: proposer"
-	@ $(CXX) -o proposer src/proposer.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
+	@ $(CXX) -o proposer src/proposer.cpp src/socket/client/client_socket.cpp src/socket/server/connection.cpp src/paxos_component.cpp src/socket/server/server_socket.cpp src/socket/server/service.cpp $(CXX_FLAGS)
 
 learner: clean make_folders
 	@ echo "Building target using G++ compiler: learner"
-	@ $(CXX) -o learner src/learner.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
+	@ $(CXX) -o learner src/learner.cpp src/socket/client/client_socket.cpp src/socket/server/connection.cpp src/paxos_component.cpp src/socket/server/server_socket.cpp src/socket/server/service.cpp $(CXX_FLAGS)
 
 run:
 	@ ./$(PROJECT_NAME)

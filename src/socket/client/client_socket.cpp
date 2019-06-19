@@ -1,4 +1,4 @@
-#include "../include/client_socket.h"
+#include "../../../include/socket/client/client_socket.h"
 
 ClientSocket::ClientSocket()
 {

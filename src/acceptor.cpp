@@ -3,20 +3,7 @@
 Acceptor::Acceptor(unsigned int id)
 {
     this->_id = id;
-
-    std::ifstream ifs;
-    ifs.open("learners.info");
-
-    std::string ip_address;
-    std::string port_num;
-    
-    while (!ifs.eof())
-    {
-        ifs >> ip_address;
-        ifs >> port_num;
-
-        _learners.push_back({"", ip_address, stoi(port_num)});
-    }    
+    read_nodes_address();    
 }
 
 void Acceptor::start_listening(unsigned short port_num)
@@ -109,6 +96,23 @@ void Acceptor::accepted()
         {
             std::cout << "Error occured! Error code = " << e.code() << ". Message: " << e.what();
         }
+    }
+}
+
+void Acceptor::read_nodes_address()
+{
+    std::ifstream ifs;
+    ifs.open("learners.info");
+
+    std::string ip_address;
+    std::string port_num;
+    
+    while (!ifs.eof())
+    {
+        ifs >> ip_address;
+        ifs >> port_num;
+
+        _learners.push_back({"", ip_address, stoi(port_num)});
     }
 }
 

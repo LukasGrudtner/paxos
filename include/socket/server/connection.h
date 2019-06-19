@@ -8,7 +8,7 @@
 #include <boost/asio.hpp>
 
 #include "service.h"
-#include "paxos_component.h"
+#include "../../paxos_component.h"
 
 using namespace boost;
 
