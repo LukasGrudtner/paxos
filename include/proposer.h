@@ -2,12 +2,15 @@
 #define __PROPOSER_H__
 
 #include <string>
+#include <fstream>
 #include "settings.h"
 #include "client_socket.h"
+#include "paxos_component.h"
 
-class Proposer
+class Proposer : public PaxosComponent
 {
 public:
+    Proposer(unsigned int id);
     /**
      * O número da proposta de cada proceso proponente (proposer) deve ser um
      * número natural único, positivo e monotônico, com relação aos números
@@ -21,17 +24,22 @@ public:
      * a dupla (n, v), onde n representa o número da proposta e v um dado valor
      * (enviado por um processo cliente).
      */
-    void prepare_request();
+    void prepare_request(unsigned int n, unsigned int v);
 
     /**
      * Depois de receber a confirmação 'prepare_response' da maioria dos acceptors,
      * o processo retorna esta mensagem à eles com o N definido anteriormente por ele
      * e o maior V que ele recebeu nas mensagens prepare_response.
      */
-    int accept_request();
+    void accept_request();
+
+    std::string on_received_response(std::string response);
 
 private:
-
+    unsigned int _num_accepted = 0;
+    unsigned int _n = 0;
+    unsigned int _v = 0;
+    std::vector<Component> _acceptors;
 };
 
 #endif

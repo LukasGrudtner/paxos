@@ -8,7 +8,7 @@ ClientSocket::ClientSocket()
     }));
 }
 
-std::string ClientSocket::send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, Callback callback, unsigned int request_id)
+std::string ClientSocket::send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, PaxosComponent* component, unsigned int request_id)
 {
     std::shared_ptr<Session> session =
         std::shared_ptr<Session>(new Session(m_ios,
@@ -16,7 +16,7 @@ std::string ClientSocket::send(std::string request, unsigned int duration_sec, c
             port_num,
             request,
             request_id,
-            callback));
+            component));
     
     session->m_sock.open(session->m_ep.protocol());
 
@@ -59,7 +59,6 @@ std::string ClientSocket::send(std::string request, unsigned int duration_sec, c
             return;
          }
 
-         std::cout << "write" << std::endl;
 
          std::unique_lock<std::mutex>
             cancel_lock(session->m_cancel_guard);
@@ -138,5 +137,5 @@ void ClientSocket::on_request_complete(std::shared_ptr<Session> session)
         ec = session->m_ec;
     
     /* Call the callback provided by the user. */
-    session->m_callback(session->m_id, session->m_response, ec);
+    session->m_component->on_received_response(session->m_response);
 }

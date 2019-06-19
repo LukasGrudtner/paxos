@@ -1,9 +1,10 @@
 #include "../include/connection.h"
 
-Connection::Connection(asio::io_service& ios, unsigned short port_num) :
+Connection::Connection(asio::io_service& ios, unsigned short port_num, PaxosComponent* component) :
     m_ios(ios),
     m_acceptor(m_ios, asio::ip::tcp::endpoint(asio::ip::address_v4::any(), port_num)),
-    m_is_stopped(false)
+    m_is_stopped(false),
+    px(component)
 {}
 
 /* Start accepting incoming connection requests. */
@@ -35,7 +36,7 @@ void Connection::init_accept()
 void Connection::on_accept(const boost::system::error_code& ec, std::shared_ptr<asio::ip::tcp::socket> sock)
 {
     if (ec == 0) {
-        (new Service(sock, m_ios))->start_handling();
+        (new Service(sock, m_ios, px))->start_handling();
     }
     else {
         std::cout << "Error ocurred! Error code = " << ec.value() << ". Message: " << ec.message();

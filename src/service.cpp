@@ -1,8 +1,9 @@
 #include "../include/service.h"
 
-Service::Service(std::shared_ptr<asio::ip::tcp::socket> sock, asio::io_service& io) : 
+Service::Service(std::shared_ptr<asio::ip::tcp::socket> sock, asio::io_service& io, PaxosComponent* component) : 
         m_sock(sock), 
-        m_ios(io)
+        m_ios(io),
+        px(component)
 {}
 
 
@@ -35,8 +36,6 @@ void Service::start_handling()
 void Service::on_requested_received(const boost::system::error_code& ec, std::size_t bytes_transferred)
 {
     if (ec != 0) {
-        std::cout << "Error ocurred! Error code = " << ec.value() << ". Message: " << ec.message();
-
         on_finish();
         return;
     }
@@ -55,11 +54,7 @@ void Service::on_response_sent(const boost::system::error_code& ec, std::size_t 
         std::cout << "Error ocurred! Error code = " << ec.value() << ". Message: " << ec.message();
     }
 
-    /**
-     * Here we put our treatment!!!
-     */
-
-    // on_finish();
+    on_finish();
 }
 
 /* Here we perform the cleanup. */
@@ -72,19 +67,9 @@ void Service::process_request(asio::streambuf& request)
 {
     /* In this method we parse the request, process it and prepare the request. */
     /* Prepare writing of received data. */
-    std::string data(boost::asio::buffers_begin(request.data()), boost::asio::buffers_begin(request.data()) + request.size());
+    std::string response(boost::asio::buffers_begin(request.data()), boost::asio::buffers_begin(request.data()) + request.size());
 
-    /* Prepare file id (remote ip address + remote port) */
-    /* Ensures that the data sent by each client socket is written to different files. */
-
-    std::string fileid = m_sock.get()->remote_endpoint().address().to_string() +
-                        ":" + std::to_string(m_sock.get()->remote_endpoint().port());
-
-    /**
-     * Here we put our process request!!!!!
-     */
-
-    std::string m_response = "accepted\n";
+    std::string m_response = px->on_received_response(response);
 
     asio::async_write(*m_sock.get(), 
             asio::buffer(m_response),
@@ -96,5 +81,4 @@ void Service::process_request(asio::streambuf& request)
                                   bytes_transferred);
                });
 
-    std::cout << "teste" << std::endl;
 }

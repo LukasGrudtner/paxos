@@ -4,6 +4,8 @@
 #include <boost/asio.hpp>
 
 #include "connection.h"
+#include "paxos_component.h"
+#include <string>
 
 using namespace boost;
 
@@ -13,7 +15,7 @@ public:
     ServerSocket();
 
     /* Starts the server, passing the port number and the number ofthreads to service requests. */
-    void start(unsigned short port_num, unsigned int thread_pool_size);
+    void start(unsigned short port_num, unsigned int thread_pool_size, PaxosComponent* component);
 
     /* Stops the server, calling Acceptor stop() method. */
     void stop();

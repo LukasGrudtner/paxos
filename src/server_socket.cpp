@@ -6,12 +6,12 @@ ServerSocket::ServerSocket()
 }
 
 /* Start the server. */
-void ServerSocket::start(unsigned short port_num, unsigned int thread_pool_size)
+void ServerSocket::start(unsigned short port_num, unsigned int thread_pool_size, PaxosComponent* component)
 {
     assert(thread_pool_size > 0);
 
     /* Create and start Acceptor. */
-    acc.reset(new Connection(m_ios, port_num));
+    acc.reset(new Connection(m_ios, port_num, component));
     acc->start();
 
     /* Create specified number of threads and add them to the pool. */

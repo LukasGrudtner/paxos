@@ -8,13 +8,14 @@
 #include <boost/asio.hpp>
 
 #include "service.h"
+#include "paxos_component.h"
 
 using namespace boost;
 
 class Connection
 {
 public:
-    Connection(asio::io_service& ios, unsigned short port_num);
+    Connection(asio::io_service& ios, unsigned short port_num, PaxosComponent* component);
 
     /**
      * Instructs an object of the Acceptor class to start listening and accepting incoming connection
@@ -43,6 +44,7 @@ private:
     asio::io_service& m_ios;
     asio::ip::tcp::acceptor m_acceptor;
     std::atomic<bool> m_is_stopped;
+    PaxosComponent* px;
 };
 
 #endif

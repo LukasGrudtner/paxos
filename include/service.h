@@ -5,6 +5,8 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 
+#include "paxos_component.h"
+
 using namespace boost;
 
 /**
@@ -14,7 +16,7 @@ using namespace boost;
 class Service
 {
 public:
-    Service(std::shared_ptr<asio::ip::tcp::socket> sock, asio::io_service& io);
+    Service(std::shared_ptr<asio::ip::tcp::socket> sock, asio::io_service& io, PaxosComponent* component);
 
     /**
      * Starts handling the client by initiating the asynchronous reading operation to read 
@@ -46,6 +48,7 @@ private:
     asio::streambuf m_request;
     std::shared_ptr<asio::ip::tcp::socket> m_sock;
     asio::io_service& m_ios;
+    PaxosComponent* px;
 };
 
 #endif
