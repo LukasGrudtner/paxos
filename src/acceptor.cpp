@@ -92,7 +92,7 @@ void Acceptor::accepted()
                             std::to_string(_chosen_v) + SEPARATOR +
                             END_OF_MESSAGE;
 
-    for (int i = 0; i < _learners.size(); i++) {
+    for (unsigned int i = 0; i < _learners.size(); i++) {
 
         /* ...processing time... */
         srand(time(NULL));

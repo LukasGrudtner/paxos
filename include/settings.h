@@ -33,7 +33,7 @@
 struct Component {
     std::string component;
     std::string ip_address;
-    unsigned short port_number;
+    int port_number;
 };
 
 #endif

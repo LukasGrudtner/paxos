@@ -60,7 +60,7 @@ class ClientSocket : public boost::noncopyable
 {
 public:
     ClientSocket();
-    std::string send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, PaxosComponent* component, unsigned int request_id);
+    void send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, PaxosComponent* component, unsigned int request_id);
     void cancel_request(unsigned int request_id);
 
     void close();

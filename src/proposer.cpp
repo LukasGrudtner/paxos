@@ -29,7 +29,7 @@ void Proposer::prepare_request(unsigned int n, unsigned int v)
                             std::to_string(v) + SEPARATOR +
                             END_OF_MESSAGE;
 
-    for (int i = 0; i < _acceptors.size(); i++) {
+    for (unsigned int i = 0; i < _acceptors.size(); i++) {
         
         /* ...processing time... */
         srand(time(NULL));
@@ -82,7 +82,7 @@ void Proposer::accept_request()
                             std::to_string(_v) + SEPARATOR +
                             END_OF_MESSAGE;
 
-    for (int i = 0; i < _acceptors.size(); i++) {
+    for (unsigned int i = 0; i < _acceptors.size(); i++) {
         /* ...processing time... */
         srand(time(NULL));
         std::this_thread::sleep_for(std::chrono::milliseconds(((rand() % MAX_TIME) + 1000)));

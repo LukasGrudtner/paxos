@@ -14,7 +14,6 @@ CXX=g++
 
 # flags for compiler
 CXX_FLAGS=-W                    \
-          -Wall                 \
           -ansi                 \
           -pedantic             \
 		  -Wno-unused-parameter \
@@ -31,12 +30,23 @@ RM = rm -rf
 # compilation and linking
 all: make_folders $(PROJECT_NAME)
 
-$(PROJECT_NAME): $(OBJ)
-	@ echo "Building target using G++ compiler: $<"
-	@ $(CXX) $^ -o $@ $(CXX_FLAGS) 
-	@ echo "Finished building binary: $@"
-	@ echo " "
+# $(PROJECT_NAME): $(OBJ)
+# 	@ echo "Building target using G++ compiler: $<"
+# 	@ $(CXX) $^ -o $@ $(CXX_FLAGS) 
+# 	@ echo "Finished building binary: $@"
+# 	@ echo " "
 
+acceptor: clean make_folders
+	@ echo "Building target using G++ compiler: acceptor"
+	@ $(CXX) -o acceptor src/acceptor.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
+
+proposer: clean make_folders
+	@ echo "Building target using G++ compiler: proposer"
+	@ $(CXX) -o proposer src/proposer.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
+
+learner: clean make_folders
+	@ echo "Building target using G++ compiler: learner"
+	@ $(CXX) -o learner src/learner.cpp src/client_socket.cpp src/connection.cpp src/paxos_component.cpp src/server_socket.cpp src/service.cpp $(CXX_FLAGS)
 
 run:
 	@ ./$(PROJECT_NAME)
@@ -46,10 +56,10 @@ run:
 	@ $(CXX) $< $(CXX_FLAGS) -c -o $@
 	@ echo " "
 
-./obj/main.o: ./src/main.cpp $(H_SRC)
-	@ echo "Building target using G++ compiler: $<"
-	@ $(CXX) $< $(CXX_FLAGS) -c -o $@
-	@ echo " "
+# ./obj/main.o: ./src/main.cpp $(H_SRC)
+# 	@ echo "Building target using G++ compiler: $<"
+# 	@ $(CXX) $< $(CXX_FLAGS) -c -o $@
+# 	@ echo " "
 
 clean:
 	@ $(RM) ./obj/* ./obj *~

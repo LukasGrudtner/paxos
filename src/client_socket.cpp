@@ -8,7 +8,7 @@ ClientSocket::ClientSocket()
     }));
 }
 
-std::string ClientSocket::send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, PaxosComponent* component, unsigned int request_id)
+void ClientSocket::send(std::string request, unsigned int duration_sec, const std::string& raw_ip_address, unsigned short port_num, PaxosComponent* component, unsigned int request_id)
 {
     std::shared_ptr<Session> session =
         std::shared_ptr<Session>(new Session(m_ios,
